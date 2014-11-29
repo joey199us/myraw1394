@@ -1,0 +1,18 @@
+#!/bin/bash
+#If this script fails to work when there is a header file update you must run 
+#the following commands to reinstate the raw1394 stack:
+#1.) sudo emacs -nw /etc/modprobe.d/blacklist-firewire.conf
+#2.) within this file comment out raw1394 firewire-ohci, & firewire-sbp2
+#3.) save and exit emacs 
+#4.) run the following in the terminal sudo update-initramfs -k all -u
+#5.) reboot system
+#6.) build and install raw1394 kernel mod as done before.
+      
+cd ~/workspace/myraw1394
+make
+sudo chmod 777 /dev/fw*
+sudo ln /dev/fw0 /dev/raw1394
+#sudo modprobe raw1394
+sudo chmod 777 /dev/fw*
+
+sudo insmod raw1394.ko
